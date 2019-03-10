@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  eureka-service:
+    image: microservice/eureka-service
+    container_name: eureka-service
+    build:
+      context: ./eureka-service
+      dockerfile: Dockerfile
+    ports:
+      - "8761:8761"
