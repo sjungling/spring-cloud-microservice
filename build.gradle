@@ -45,9 +45,62 @@ subprojects {
         }
     }
 
-    dependencies{
+    dependencies {
+        compileOnly "org.springframework.boot:spring-boot-configuration-processor"
+
         implementation 'org.springframework.boot:spring-boot-starter'
+
+        /**
+         * 禁用: compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.1.4.RELEASE'
+         * 因與Spring Cloud GateWay不兼容
+         */
+        
+        /**
+         * 各別引入依賴
+         * Jackson: jackson-annotations、jackson-core、jackson-databind
+         */
+        compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.9.9'
+        compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.9.9'
+        compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.9'
+
         implementation 'org.springframework.boot:spring-boot-devtools'
+        compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign'/*, version: '2.1.1.RELEASE'*/
+
+        /** Swagger2 **/
+        compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
+        compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
+
+        /** AMQP **/
+        compile group: 'org.springframework.boot', name: 'spring-boot-starter-amqp', version: '2.1.4.RELEASE'
+
+        /** Redis
+         *  1. 依賴：spring-data-redis & lettuce
+         *  2. springboot 2.x 預設使用 Lettuce 連線
+         *  3. 若要配置 redis cluster，Lettuce 需引入 commons-pools 依賴來連接 連接池
+         */
+        compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis'/*, version: '2.1.5.RELEASE'*/
+        compile group: 'org.apache.commons', name: 'commons-pool2', version: '2.6.2'
+
+        /** Redisson **/
+        compile group: 'org.redisson', name: 'redisson', version: '3.10.7'
+        //compile group: 'org.redisson', name: 'redisson-spring-boot-starter', version: '3.10.7'
+
+        /** Lombok **/
+        compileOnly 'org.projectlombok:lombok:1.18.6'
+        testCompileOnly 'org.projectlombok:lombok:1.18.6'
+
+        annotationProcessor 'org.projectlombok:lombok:1.18.6'
+        testAnnotationProcessor 'org.projectlombok:lombok:1.18.6'
+
+        /** Apache Common-Lang3 **/
+        compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.9'
+
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
     }
 }
+/*
+Downloads and sets up gradle(No manual installation needed)
+task wrapper(type: Wrapper) {
+    gradleVersion = '5.2.1' //version required
+}
+*/
