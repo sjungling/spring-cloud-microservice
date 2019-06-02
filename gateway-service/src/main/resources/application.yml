@@ -17,3 +17,8 @@ eureka:
 logging:
   level:
     org.springframework.cloud.gateway: debug
+
+ignore:
+  # 此屬性用來設定不生成該服務的swagger文件
+  swagger-providers:
+    #- "FLASHSALE-SERVICE"
