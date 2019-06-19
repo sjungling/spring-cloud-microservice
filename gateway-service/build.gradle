@@ -1,16 +1,14 @@
 dependencies {
     /** 基於Spring5.0, Spring Boot2.0, Spring Webflux, Netty
-     * 
-     * 依賴 spring-boot-starter-webflux 所以不會兼容 spring-boot-starter-web
+     *
+     * 依賴 spring-boot-starter-webflux 所以不兼容 spring-boot-starter-web
      */
-    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-gateway'/*, version: '2.1.1.RELEASE'*/
+    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-gateway'
 
-    /**
-     * Spring Cloud GateWay 提供基於Redis的限流(Webflux & Reactive)
-     */
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis-reactive'/*, version: '2.1.5.RELEASE'*/
+    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-eureka-client'
     
-    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-eureka-client'/*, version: '2.1.1.RELEASE'*/
+    /** Spring Cloud GateWay 提供基於Redis的限流(Webflux & Reactive) */
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis-reactive'
 }
 
 bootJar {

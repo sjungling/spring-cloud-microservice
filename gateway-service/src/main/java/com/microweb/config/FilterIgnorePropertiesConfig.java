@@ -1,4 +1,4 @@
-package com.microweb.gateway.config;
+package com.microweb.config;
 
 import lombok.Data;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;

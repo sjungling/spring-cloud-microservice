@@ -1,10 +1,10 @@
 //提供Swagger對外的介面(API)
 
-package com.microweb.gateway.config;
+package com.microweb.config;
 
-import com.microweb.gateway.handler.SwaggerResourceHandler;
-import com.microweb.gateway.handler.SwaggerSecurityHandler;
-import com.microweb.gateway.handler.SwaggerUiHandler;
+import com.microweb.handler.SwaggerUiHandler;
+import com.microweb.handler.SwaggerResourceHandler;
+import com.microweb.handler.SwaggerSecurityHandler;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

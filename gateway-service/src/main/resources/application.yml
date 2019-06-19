@@ -1,5 +1,6 @@
 server:
-  port: 8082
+  port: 8081
+
 spring:
   application:
     name: gateway-service
@@ -9,6 +10,39 @@ spring:
         locator:
           enabled:  true #default:false, uses serviceId to create a route ex: user-service uri:/user/list => localhost:port/USER-SERVER/user/list
       #          lower-case-service-id:  true # services register to eureka default are uppercase name  ex:FLASHSALE-SERVICE
+      routes:
+        ###########  PRODUCT SERVICE   #################
+        - id: PRODUCT-SERVICE #命名
+          uri:  lb://PRODUCT-SERVICE/
+          # 1. lb://PRODUCT-SERVICE/  --> 透過服務發現(eureka)後,轉發至服務的負載均衡地址。
+          # 2. 若設定值為網址: http://xxx，則直接轉發至設定的網址。
+          predicates: #匹配
+            - Path=/products/** #設定的路徑值，完全配置到才會進行轉發
+          filters:
+            - StripPrefix=1 #服務發現(eureka)轉發會多一層服務名稱，需去除 ex: http://product-service/test --> http://test
+
+        ###########  FLASHSALE SERVICE   #################
+        - id: FLASHSALE-SERVICE
+          uri:  lb://FLASHSALE-SERVICE/
+          predicates:
+            - Path=/flashsales/**
+          filters:
+            - StripPrefix=1
+            #------- return Too Many Requests , HttpStatusCode:429
+            - name: RequestRateLimiter #RequestRateLimiterGatewayFilterFactory: 預設採用令牌桶(Token Bucket)算法
+              args:
+                key-resolver: '#{@remoteAddrKeyResolver}'  #透過SpEL表示法，引用名稱為remoteAddrKeyResolver的Bean，預設為PrincipalNameKeyResolver
+                redis-rate-limiter.burstCapacity: 10 #令牌桶的容量，允許一秒內完成的最大請求數
+                redis-rate-limiter.replenishRate: 1 #令牌桶每秒填充平均速率(即允許用戶每秒處理多少請求)
+            #-------
+            -
+        ###########  ORDER SERVICE   #################
+        - id: ORDER-SERVICE
+          uri:  lb://ORDER-SERVICE/
+          predicates:
+            - Path=/orders/**
+          filters:
+            - StripPrefix=1
 eureka:
   client:
     register-with-eureka: true #default: true
@@ -21,4 +55,4 @@ logging:
 ignore:
   # 此屬性用來設定不生成該服務的swagger文件
   swagger-providers:
-    #- "FLASHSALE-SERVICE"
+  #- "FLASHSALE-SERVICE"

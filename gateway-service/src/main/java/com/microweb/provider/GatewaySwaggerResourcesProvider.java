@@ -1,8 +1,8 @@
 //注入 route 到 SwaggerResource
 
-package com.microweb.gateway.provider;
+package com.microweb.provider;
 
-import com.microweb.gateway.config.FilterIgnorePropertiesConfig;
+import com.microweb.config.FilterIgnorePropertiesConfig;
 import lombok.AllArgsConstructor;
 import org.springframework.cloud.gateway.config.GatewayProperties;
 import org.springframework.cloud.gateway.discovery.DiscoveryClientRouteDefinitionLocator;
