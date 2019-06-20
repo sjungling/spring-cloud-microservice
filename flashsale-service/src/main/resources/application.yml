@@ -1,0 +1,30 @@
+server:
+  port: 8084
+
+spring:
+  application:
+    name: flashsale-service
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/microservice?&serverTimeZone=Asia/Taipei&userUnicode=true&characterEncoding=UTF-8&useSSL=false
+    username: root
+    password: password
+  jpa:
+    hibernate:
+      #      ddl-auto: create # create:每次都會刪除table，重新建立entity的資料表
+      ddl-auto: update
+    show-sql: true
+    database-platform: org.hibernate.dialect.MySQL57InnoDBDialect
+    generate-ddl: true
+  #Feign overriding registered
+  main:
+    allow-bean-definition-overriding: true
+  #熱部署
+  devtools:
+    restart:
+      enabled: true
+#      additional-paths: src/main/java
+# eureka
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: ${EUREKA_SERVER_LIST:http://eureka-peer1:8761/eureka/,http://eureka-peer2:8762/eureka/,http://eureka-peer3:8763/eureka/}

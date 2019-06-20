@@ -2,6 +2,15 @@ dependencies {
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-server'
 }
 
-bootJar {
-    archiveName = 'eureka-service.jar'
+/*
+jar {
+    baseName = "${baseName}"
+    manifest {
+        attributes 'Main-Class': "${mainClassName}"
+        attributes "Class-Path": (configurations.runtime.files + jar.outputs.files)*.name.join(" ")
+    }
 }
+*/
+//archivesBaseName = "eureka-service"
+jar.archiveName = "eureka-service.jar"
+bootJar.archiveName 'eureka-service.jar'

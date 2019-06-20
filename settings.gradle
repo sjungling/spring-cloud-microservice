@@ -1,4 +1,22 @@
 rootProject.name = 'spring-cloud-docker-microservice'
 
+include 'commons'
+
+/* provider api*/
+include 'provider-api:product'
+include 'provider-api:flashsale'
+include 'provider-api:order'
+
 include 'eureka-service'
+
+include 'gateway-service'
+
+include 'order-service'
+
+include 'product-service'
+
+include 'flashsale-service'
+
+//include 'search-service'
+
 

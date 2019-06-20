@@ -17,15 +17,15 @@ spring:
           # 1. lb://PRODUCT-SERVICE/  --> 透過服務發現(eureka)後,轉發至服務的負載均衡地址。
           # 2. 若設定值為網址: http://xxx，則直接轉發至設定的網址。
           predicates: #匹配
-            - Path=/products/** #設定的路徑值，完全配置到才會進行轉發
+            - Path=/product/** #設定的路徑值，完全配置到才會進行轉發
           filters:
-            - StripPrefix=1 #服務發現(eureka)轉發會多一層服務名稱，需去除 ex: http://product-service/test --> http://test
+            - StripPrefix=1 #服務發現(eureka)層服務名稱，需去除 ex: http://PRODUCT-SERVICE/products --> http://products
 
         ###########  FLASHSALE SERVICE   #################
         - id: FLASHSALE-SERVICE
           uri:  lb://FLASHSALE-SERVICE/
           predicates:
-            - Path=/flashsales/**
+            - Path=/flashsale/**
           filters:
             - StripPrefix=1
             #------- return Too Many Requests , HttpStatusCode:429
@@ -35,12 +35,11 @@ spring:
                 redis-rate-limiter.burstCapacity: 10 #令牌桶的容量，允許一秒內完成的最大請求數
                 redis-rate-limiter.replenishRate: 1 #令牌桶每秒填充平均速率(即允許用戶每秒處理多少請求)
             #-------
-            -
         ###########  ORDER SERVICE   #################
         - id: ORDER-SERVICE
           uri:  lb://ORDER-SERVICE/
           predicates:
-            - Path=/orders/**
+            - Path=/order/**
           filters:
             - StripPrefix=1
 eureka:

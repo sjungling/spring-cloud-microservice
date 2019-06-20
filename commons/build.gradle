@@ -1,0 +1,24 @@
+dependencies {
+    /** Spring核心, Jackson, Hibernate Validator, Tomcat*/
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web'
+
+    /** JPA相關的依賴:spring-data-jpa、spring-orm 和 Hibernate */
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa'
+
+    /** Spring Data Mongo */
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-mongodb'
+
+    /** Spring Data Redis
+     *  1. 依賴：spring-data-redis & lettuce
+     *  2. springboot 2.x 預設使用 Lettuce 連線
+     *  3. 若要配置 redis cluster，Lettuce 需引入 commons-pools 依賴來連接 連接池
+     */
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis'
+    implementation group: 'org.apache.commons', name: 'commons-pool2', version: '2.6.2'
+
+    /** Redisson **/
+    compile group: 'org.redisson', name: 'redisson', version: '3.10.7'
+    //implementation group: 'org.redisson', name: 'redisson-spring-boot-starter', version: '3.10.7'
+
+    //compile group: 'javax.persistence', name: 'javax.persistence-api', version: '2.2'
+}

@@ -11,52 +11,47 @@ services:
     environment:
       - "EUREKA_INSTANCE_HOSTNAME=eureka-peer1"
       - "EUREKA_SERVER_LIST=http://eureka-peer2:8761/eureka,http://eureka-peer3:8761/eureka"
-#      - "EUREKA_SPRING_PROFILES_ACTIVE=eureka-clustered"
+    #      - "EUREKA_SPRING_PROFILES_ACTIVE=eureka-clustered"
     networks:
       eureka_net:
         aliases:
           - eureka-peer1
-  eurekaService2:
-    image: microservice/eureka-service
-    container_name: eurekaService2
-    build:
-      context: ./eureka-service
-    ports:
-      - "8762:8761"
-    environment:
-      - "EUREKA_INSTANCE_HOSTNAME=eureka-peer2"
-      - "EUREKA_SERVER_LIST=http://eureka-peer1:8761/eureka,http://eureka-peer3:8761/eureka"
-#      - "EUREKA_SPRING_PROFILES_ACTIVE=eureka-clustered"
-    networks:
-      eureka_net:
-        aliases:
-          - eureka-peer2
-  eurekaService3:
-    image: microservice/eureka-service
-    container_name: eurekaService3
-    build:
-      context: ./eureka-service
-    ports:
-      - "8763:8761"
-    environment:
-      - "EUREKA_INSTANCE_HOSTNAME=eureka-peer3"
-      - "EUREKA_SERVER_LIST=http://eureka-peer1:8761/eureka,http://eureka-peer2:8761/eureka"
-#      - "EUREKA_SPRING_PROFILES_ACTIVE=eureka-clustered"
-    networks:
-      eureka_net:
-        aliases:
-          - eureka-peer3
   gatewayService:
     image: microservice/gateway-service
     container_name: gatewayService
     build:
       context: ./gateway-service
     ports:
-      - "8082:8082"
+      - "8081:8081"
     networks:
       - eureka_net
     environment:
-#      - "EUREKA_SERVER_LIST=http://eureka-peer1:8761/eureka,http://eureka-peer2:8762/eureka,http://eureka-peer3:8763/eureka"
+      - "EUREKA_SERVER_LIST=http://eureka-peer1:8761/eureka,http://eureka-peer2:8761/eureka,http://eureka-peer3:8761/eureka"
+  productService:
+    image: microservice/product-service
+    container_name: productService
+    build:
+      context: ./product-service
+    ports:
+      - "8082:8082"
+  orderService:
+    image: microservice/order-service
+    container_name: orderService
+    build:
+      context: ./order-service
+    ports:
+      - "8083:8083"
+    depends_on:
+      - productService
+  flashsaleService:
+    image: microservice/flashsale-service
+    container_name: flashsaleService
+    build:
+      context: ./flashsale-service
+    ports:
+      - "8084:8084"
+    depends_on:
+      - productService
 networks:
   eureka_net:
     driver: bridge

@@ -1,13 +1,43 @@
-#debug: true
 server:
   port: 8761
-
+#=========== Eureka Standalone Mode ===========#
+#debug: true
+spring:
+  #profiles: eureka-standalone
+  application:
+    name: eureka-server-standalone
 eureka:
   instance:
-    prefer-ip-address: true
+    #    prefer-ip-address: true
     hostname: localhost
   client:
     registerWithEureka: false
-    fetchRegistry:  false
+    fetchRegistry: false
     service-url:
-      defautlZone:  http://${eureka.instance.hostname}:${server.port}/eureka/
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+
+#=========== Eureka Peer Awareness Mode ===========#
+
+
+#=========== Eureka Cluster Mode ===========#
+---
+#spring:
+#  profiles: eureka-clustered
+#  application:
+#    name: eureka-server-clustered
+#server:
+#  port: ${EUREKA_SERVER_PORT:8761}
+#eureka:
+#  server:
+#    enable-self-preservation: false #default:true
+#  instance:
+#    hostname: ${EUREKA_INSTANCE_HOSTNAME:localhost}
+#  #     Instance ID default: ${spring.cloud.client.hostname}:${spring.application.name}:${spring.application.instance_id:${server.port}}
+#  #    prefer-ip-address: true
+#  #    instance-id: ${spring.cloud.ipAddress}:${peers.port1} #:@project.version@ # include version
+#  #    ip-address: ${EUREKA_INSTANCE_IP_ADDRESS}
+#  client:
+#    register-with-eureka: true #default: true
+#    fetch-registry: true #default: true
+#    service-url:
+#      defaultZone:  ${EUREKA_SERVER_LIST:http://eureka-peer2:8761/eureka/,http://eureka-peer3:8761/eureka/}

@@ -1,0 +1,39 @@
+dependencies {
+    /*
+    compile project(":commons") {
+        bootJar.enabled = false
+        jar.enabled = true
+    }*/
+    implementation project(":commons")
+
+    /** Provider API */
+    implementation project(":provider-api:product") {
+        bootJar.enabled = false
+        jar.enabled = true
+    }
+    implementation project(":provider-api:order") {
+        bootJar.enabled = false
+        jar.enabled = true
+    }
+    implementation project(":provider-api:flashsale") {
+        bootJar.enabled = false
+        jar.enabled = true
+    }
+    
+    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-eureka-client'
+
+    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign'
+
+    /** Spring核心, Jackson, Hibernate Validator, Tomcat */
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web'
+
+    /** JPA相關的依賴:spring-data-jpa、spring-orm 和 Hibernate */
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa'
+
+    /** MYSQL Connector */
+    implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.16'
+}
+
+//archivesBaseName = "order-service"
+jar.archiveName = "order-service.jar"
+bootJar.archiveName = 'order-service.jar'

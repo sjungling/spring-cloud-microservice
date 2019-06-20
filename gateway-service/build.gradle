@@ -6,11 +6,11 @@ dependencies {
     implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-gateway'
 
     implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-eureka-client'
-    
+
     /** Spring Cloud GateWay 提供基於Redis的限流(Webflux & Reactive) */
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis-reactive'
 }
 
-bootJar {
-    archiveName = 'gateway-service.jar'
-}
+//archivesBaseName = "gateway-service"
+jar.archiveName = "gateway-service.jar"
+bootJar.archiveName = 'gateway-service.jar'
