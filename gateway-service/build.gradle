@@ -12,5 +12,5 @@ dependencies {
 }
 
 //archivesBaseName = "gateway-service"
-jar.archiveName = "gateway-service.jar"
+//jar.archiveName = "gateway-service.jar"
 bootJar.archiveName = 'gateway-service.jar'

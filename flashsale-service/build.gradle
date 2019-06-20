@@ -2,14 +2,8 @@ dependencies {
     implementation project(":commons")
 
     /** Provider API */
-    implementation project(":provider-api:flashsale") {
-        bootJar.enabled = false
-        jar.enabled = true
-    }
-    implementation project(":provider-api:product") {
-        bootJar.enabled = false
-        jar.enabled = true
-    }
+    implementation project(":provider-api:flashsale")
+    implementation project(":provider-api:product")
 
     implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-eureka-client'
 
@@ -26,5 +20,5 @@ dependencies {
 }
 
 //archivesBaseName = "flashsale-service"
-jar.archiveName = "flashsale-service.jar"
+//jar.archiveName = "flashsale-service.jar"
 bootJar.archiveName = 'flashsale-service.jar'

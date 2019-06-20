@@ -1,24 +1,15 @@
 dependencies {
     /*
-    compile project(":commons") {
+    implementation project(":commons") {
         bootJar.enabled = false
         jar.enabled = true
     }*/
     implementation project(":commons")
 
     /** Provider API */
-    implementation project(":provider-api:product") {
-        bootJar.enabled = false
-        jar.enabled = true
-    }
-    implementation project(":provider-api:order") {
-        bootJar.enabled = false
-        jar.enabled = true
-    }
-    implementation project(":provider-api:flashsale") {
-        bootJar.enabled = false
-        jar.enabled = true
-    }
+    implementation project(":provider-api:product") 
+    implementation project(":provider-api:order")
+    implementation project(":provider-api:flashsale")
     
     implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-eureka-client'
 
@@ -35,5 +26,5 @@ dependencies {
 }
 
 //archivesBaseName = "order-service"
-jar.archiveName = "order-service.jar"
+//jar.archiveName = "order-service.jar"
 bootJar.archiveName = 'order-service.jar'

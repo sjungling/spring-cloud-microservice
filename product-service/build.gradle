@@ -2,7 +2,6 @@ dependencies {
     implementation project(':commons')
 
     /** Provider API */
-
     implementation project(":provider-api:product") 
     
     implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-eureka-client'
@@ -18,13 +17,17 @@ dependencies {
     /** MYSQL Connector */
     implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.16'
 }
-
-
+/*
 jar {
     manifest {
-        attributes 'Main-Class': 'com.microweb.ProductApplication'
+        attributes(
+                //'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
+                'Main-Class': 'com.microweb.ProductApplication'
+        )
     }
 }
+*/
+
 //archivesBaseName = "product-service"
-jar.archiveName = "product-service.jar"
+//jar.archiveName = "product-service.jar"
 bootJar.archiveName = "product-service.jar"
