@@ -1,0 +1,47 @@
+version: "3"
+services:
+  mysql:
+    image: mysql:5.7
+    container_name: mysql
+    restart: on-failure
+    ports:
+      - "3306:3306"
+    #    volumes:
+    #      - microservice-mysql:/var/lib/mysql
+    #      - ./images/mysql/config:
+    networks:
+      - microservice-net:
+    #      microservice-net:
+    #        aliases:
+    #          - mysqldb # container 在網路拓墣取一個別名，讓其他 container 透過這個別名找到該 container
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: microservice
+  redis:
+    image: redis:3.2
+    container_name: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - microservice-net
+  mongo:
+    image: mongo:3.4
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    networks:
+      - microservice-net
+  rabbitmq:
+    image: rabbitmq:3.7-management-alpine #帶有Manage GUI後台管理
+    container_name: rabbitmq
+    ports:
+      - "5672:5672" #JMS Port
+      - "15672:15672" #Management GUI(userpass = guest:guest
+    networks:
+      - microservice-net
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASSWORD: guest
+networks:
+  microservice-net:
+    driver: bridge # default: bridge

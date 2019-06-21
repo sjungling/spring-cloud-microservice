@@ -2,7 +2,7 @@ version: '3'
 
 services:
   eurekaService1:
-    image: microservice/eureka-service
+    image: eureka-service
     container_name: eurekaService1
     build:
       context: ./eureka-service
@@ -13,47 +13,58 @@ services:
       - "EUREKA_SERVER_LIST=http://eureka-peer2:8761/eureka,http://eureka-peer3:8761/eureka"
     #      - "EUREKA_SPRING_PROFILES_ACTIVE=eureka-clustered"
     networks:
-      eureka_net:
-        aliases:
-          - eureka-peer1
+      - microservice-net
+#    networks:
+#      microservice-net:
+#        aliases: #取網路別名
+#          - eureka-peer1
   gatewayService:
-    image: microservice/gateway-service
+    image: gateway-service
     container_name: gatewayService
     build:
       context: ./gateway-service
     ports:
       - "8081:8081"
     networks:
-      - eureka_net
+      - microservice-net
     environment:
       - "EUREKA_SERVER_LIST=http://eureka-peer1:8761/eureka,http://eureka-peer2:8761/eureka,http://eureka-peer3:8761/eureka"
   productService:
-    image: microservice/product-service
+    image: product-service
+    env_file:
+      - bootstrap.env
     container_name: productService
     build:
       context: ./product-service
     ports:
       - "8082:8082"
+    networks:
+      - microservice-net
+  #    links: # 同個Host下Container之間建立連線(方式:暴露port)
   orderService:
-    image: microservice/order-service
+    image: order-service
+    env_file: bootstrap.env
     container_name: orderService
     build:
       context: ./order-service
     ports:
       - "8083:8083"
-    depends_on:
+    networks:
+      - microservice-net
+    depends_on: #注意: 僅啟動順序，不會等到container ready才接著啟動
       - productService
   flashsaleService:
-    image: microservice/flashsale-service
+    image: flashsale-service
+    env_file: bootstrap.env
     container_name: flashsaleService
     build:
       context: ./flashsale-service
     ports:
       - "8084:8084"
+    networks:
+      - microservice-net
     depends_on:
       - productService
 networks:
-  eureka_net:
-    driver: bridge
-  elk:
-    driver: bridge
+  microservice-net:
+    driver: bridge # default: bridge

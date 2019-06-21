@@ -22,7 +22,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 import java.time.Duration;
 
 @Configuration
-@EnableConfigurationProperties(RedisProperties.class)
+//@EnableConfigurationProperties(RedisProperties.class)
 public class RedisConfig {
     @Autowired
     private RedisProperties redisProperties;
@@ -75,9 +75,7 @@ public class RedisConfig {
     @ConditionalOnProperty({"spring.redis.lettuce.pool.max-active", "spring.redis.lettuce.pool.max-idle", "spring.redis.lettuce.pool.max-wait", "spring.redis.lettuce.pool.min-idle"})
     @Bean
     public LettuceConnectionFactory lettuceConnectionFactory() {
-
         RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
-
         redisStandaloneConfiguration.setDatabase(redisProperties.getDatabase());
         redisStandaloneConfiguration.setHostName(redisProperties.getHost());
         redisStandaloneConfiguration.setPort(redisProperties.getPort());

@@ -3,7 +3,6 @@ buildscript {
         springBootVersion = "2.1.3.RELEASE"
         springCloudVersion = "Greenwich.RELEASE"
         dependencyManagement = "1.0.7.RELEASE"
-        //eurekaVersion     = "2.1.1.RELEASE"
     }
 
     repositories {
@@ -13,7 +12,7 @@ buildscript {
 
     dependencies {
         classpath "io.spring.gradle:dependency-management-plugin:$dependencyManagement"
-        classpath "org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion"
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
     }
 }
 
@@ -37,41 +36,21 @@ subprojects {
 
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
-
+    
+    //spring boot & spring cloud 版本自動依賴管理
     dependencyManagement {
         imports {
-            mavenBom "org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion"
             mavenBom "org.springframework.boot:spring-boot-dependencies:$springBootVersion"
+            mavenBom "org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion"
         }
     }
-    /** ！！！重要！！！ 避免在idea運作正常，編譯時卻出現 package does not exist錯誤
-     * 參考：https://zhuanlan.zhihu.com/p/36102184 
-     */
-    
-    bootJar {
-//        classifier ='boot'
-        enabled = false
-    }
-    jar {
-        enabled = true
-    }
-    
-
-    /*
-    configurations {
-        developmentOnly
-        runtimeClasspath {
-            extendsFrom developmentOnly
-        }
-    }
-    */
 
     dependencies {
         implementation 'org.springframework.boot:spring-boot-starter'
 
-        /* !!!!!禁用!!!!  因與Spring Cloud GateWay不兼容
-            compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.1.4.RELEASE'
-        */
+        /** !!!!!禁用!!!!  因與Spring Cloud GateWay不兼容 
+         * compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.1.4.RELEASE'
+         */
 
         /**
          * 各別引入依賴
@@ -82,7 +61,7 @@ subprojects {
         implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.9'
 
         //熱部署
-        implementation group: 'org.springframework.boot', name: 'spring-boot-devtools'/*, version: '2.1.5.RELEASE'*/
+        runtimeOnly group: 'org.springframework.boot', name: 'spring-boot-devtools'/*, version: '2.1.5.RELEASE'*/
         //developmentOnly('org.springframework.boot:spring-boot-devtools')
 
         /** Swagger2 **/

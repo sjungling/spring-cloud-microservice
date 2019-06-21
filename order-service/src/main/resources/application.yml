@@ -6,9 +6,10 @@ spring:
     name: order-service
   #datasource
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/microservice?&serverTimeZone=Asia/Taipei&userUnicode=true&characterEncoding=UTF-8&useSSL=false
-    username: root
-    password: password
+    # useLegacyDatetimeCode:false  -> Disable Hibernate automatically translates Dates from to your TimeZone
+    url: jdbc:mysql://${MYSQL_SERVER_HOST:localhost}:${MYSQL_SERVER_PORT:3306}/${MYSQL_DATABASE:microservice}?&serverTimeZone=UTC%2B8&userUnicode=true&characterEncoding=UTF-8&useSSL=false&useLegacyDatetimeCode=false
+    username: ${MYSQL_USER_NAME:root}
+    password: ${MYSQL_PASSWORD:root}
   jpa:
     hibernate:
       #      ddl-auto: create # create:每次都會刪除table，重新建立entity的資料表

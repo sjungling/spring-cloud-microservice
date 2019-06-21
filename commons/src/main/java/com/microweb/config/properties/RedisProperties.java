@@ -1,30 +1,32 @@
 package com.microweb.config.properties;
 
 import lombok.Data;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
 
 import java.util.List;
 
+/**
+ * redis://user:password@example.com:6379
+ */
 @Data
-@Component
-@ConfigurationProperties(prefix = "redis")
+@Configuration
+//@ConfigurationProperties(prefix = "spring.redis")
 public class RedisProperties {
-
-    /**
-     * redis://user:password@example.com:6379
-     */
     //private String url;
 
+    @Value("${spring.redis.host}")
     private String host;
 
-    private String password;
-
+    @Value("${spring.redis.port}")
     private int port;
+
+    @Value("${spring.redis.password}")
+    private String password;
 
     private boolean ssl;
 
+    @Value("${spring.redis.timeout}")
     private Integer timeout;
 
     /**
@@ -40,9 +42,16 @@ public class RedisProperties {
 
     @Data
     public static class Pool {
+        @Value("${spring.redis.lettuce.pool.max-active}")
         private Integer maxActive;
+
+        @Value("${spring.redis.lettuce.pool.max-idle}")
         private Integer maxIdle;
+
+        @Value("${spring.redis.lettuce.pool.max-wait}")
         private Integer maxWait;
+
+        @Value("${spring.redis.lettuce.pool.min-idle}")
         private Integer minIdle;
     }
 

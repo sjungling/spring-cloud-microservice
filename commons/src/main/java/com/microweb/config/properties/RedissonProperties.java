@@ -2,10 +2,12 @@ package com.microweb.config.properties;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 @Data
 @Component
+@EnableConfigurationProperties
 @ConfigurationProperties(prefix = "distributedlock.redisson")
 public class RedissonProperties {
 
