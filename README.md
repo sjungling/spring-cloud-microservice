@@ -24,8 +24,19 @@
     * Redis (RedisPool - lettuce)
     * MongoDB
 
-第三方套件
+#### 第三方套件
 1. Lombok
 2. Swagger2
-3. Redisson(Redis Client) 
-    * 分散式鎖(可重入鎖) - 解決高併發大量請求下超賣問題
+3. Redisson(Redis分散式鎖)
+    優點:
+    * 具有可重入鎖，防止死鎖
+    *  key-value 讀寫快速
+    *  解決高併發大量請求下超賣問題
+    缺點:
+    * 鎖超時問題，太短則業務來不及執行完畢，太長則等待時間過長
+    解決方法:
+    * 搭配其他分散式鎖如zookeeper等
+#### 建置
+./gradlew clean build
+
+docker-compose up -d
