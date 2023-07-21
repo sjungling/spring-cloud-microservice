@@ -1,3 +1,7 @@
+plugins {
+    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+}
+
 dependencies {
     /** 基於Spring5.0, Spring Boot2.0, Spring Webflux, Netty
      *

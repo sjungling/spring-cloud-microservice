@@ -22,7 +22,7 @@ public class FlashSaleController {
     FlashSaleService flashSaleService;
 
     @GetMapping(value = "/flashsales/productSku/{skuId}")
-    public ResponseEntity<FlashSaleProductSku> getFlashSaleProductSkuBySkuId(@PathVariable("skuId") Long skuId) {
+    public ResponseEntity<FlashSaleProductSku> getFlashSaleProductSkuBySkuId(@PathVariable Long skuId) {
         return new ResponseEntity<>(flashSaleService.findFlashSaleProductSkuBySkuId(skuId), HttpStatus.OK);
     }
 

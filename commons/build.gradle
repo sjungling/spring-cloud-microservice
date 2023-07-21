@@ -1,3 +1,7 @@
+plugins {
+    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+}
+
 dependencies {
     /** Spring核心, Jackson, Hibernate Validator, Tomcat*/
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web'

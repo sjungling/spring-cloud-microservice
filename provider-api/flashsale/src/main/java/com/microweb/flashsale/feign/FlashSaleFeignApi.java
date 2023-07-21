@@ -15,7 +15,7 @@ import java.util.Map;
 @FeignClient(ServiceNameConstants.FLASHSALE_SERVICE)
 public interface FlashSaleFeignApi {
     @GetMapping(value = "/flashsales/productSku/{skuId}")
-    FlashSaleProductSku getFlashSaleProductSkuBySkuId(@PathVariable("skuId") Long skuId);
+    FlashSaleProductSku getFlashSaleProductSkuBySkuId(@PathVariable Long skuId);
 
     @PostMapping(value = "/flashsales/productSku/reduceStockByList", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     void reduceStockByList(@RequestBody List<Map<String, Object>> reduceStockList);

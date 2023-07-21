@@ -12,7 +12,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
 import java.util.concurrent.CountDownLatch;
@@ -44,11 +47,11 @@ public class FlashSaleMockController {
     private RabbitMQSender rabbitMQSender;
 
     @ApiOperation(value = "MySQL 悲觀鎖")
-    @RequestMapping(value = "/flashsales/mock/mysql/pessimismLock", method = RequestMethod.POST)
-    public void handlePessimismLockUpdateInMySQL(@RequestParam(name = "requestCount", required = false, defaultValue = "50") int requestCount,
-                                                 @RequestParam(name = "skuId") Long skuId,
-                                                 @RequestParam(name = "stock", required = false, defaultValue = "5") int stock,
-                                                 @RequestParam(name = "purchaseQuantity", required = false, defaultValue = "1") int purchaseQuantity) {
+    @PostMapping("/flashsales/mock/mysql/pessimismLock")
+    public void handlePessimismLockUpdateInMySQL(@RequestParam(required = false, defaultValue = "50") int requestCount,
+    @RequestParam Long skuId,
+    @RequestParam(required = false, defaultValue = "5") int stock,
+    @RequestParam(required = false, defaultValue = "1") int purchaseQuantity) {
 
         Date startTime = new Date();
 
@@ -87,11 +90,11 @@ public class FlashSaleMockController {
     }
 
     @ApiOperation(value = "MySQL 排他鎖(悲觀鎖)", notes = "高併發下，等待時間較長")
-    @RequestMapping(value = "/flashsales/mock/mysql/pessimismLock/selectForUpdate", method = RequestMethod.POST)
-    public void handlePessimismLockSelectForUpdateInMySQL(@RequestParam(name = "requestCount", required = false, defaultValue = "50") int requestCount,
-                                                          @RequestParam(name = "skuId") Long skuId,
-                                                          @RequestParam(name = "stock", required = false, defaultValue = "5") int stock,
-                                                          @RequestParam(name = "purchaseQuantity", required = false, defaultValue = "1") int purchaseQuantity) {
+    @PostMapping("/flashsales/mock/mysql/pessimismLock/selectForUpdate")
+    public void handlePessimismLockSelectForUpdateInMySQL(@RequestParam(required = false, defaultValue = "50") int requestCount,
+    @RequestParam Long skuId,
+    @RequestParam(required = false, defaultValue = "5") int stock,
+    @RequestParam(required = false, defaultValue = "1") int purchaseQuantity) {
 
         Date startTime = new Date();
         log.info("Mysql PessimismLockSelectForUpdate -> start:{}, requestCount:{}, skuId:{}, stock:{} ,quantity:{}", startTime, requestCount, skuId, stock, purchaseQuantity);
@@ -132,11 +135,11 @@ public class FlashSaleMockController {
     }
 
     @ApiOperation(value = "MySQL 樂觀鎖")
-    @RequestMapping(value = "/flashsales/mock/mysql/optimisticLock", method = RequestMethod.POST)
-    public void handleOptimisticLockInMySQL(@RequestParam(name = "requestCount", required = false, defaultValue = "50") int requestCount,
-                                            @RequestParam(name = "skuId") Long skuId,
-                                            @RequestParam(name = "stock", required = false, defaultValue = "5") int stock,
-                                            @RequestParam(name = "purchaseQuantity", required = false, defaultValue = "1") int purchaseQuantity) {
+    @PostMapping("/flashsales/mock/mysql/optimisticLock")
+    public void handleOptimisticLockInMySQL(@RequestParam(required = false, defaultValue = "50") int requestCount,
+    @RequestParam Long skuId,
+    @RequestParam(required = false, defaultValue = "5") int stock,
+    @RequestParam(required = false, defaultValue = "1") int purchaseQuantity) {
 
         Date startTime = new Date();
         log.info("Mysql OptimisticLock -> start:{}, requestCount:{}, skuId:{}, stock:{} ,quantity:{}", startTime, requestCount, skuId, stock, purchaseQuantity);
@@ -176,11 +179,11 @@ public class FlashSaleMockController {
     }
 
     @ApiOperation(value = "Redisson分散式鎖阻塞鎖", notes = "等待時間內，進行重試獲取鎖")
-    @RequestMapping(value = "/flashsales/mock/distributed/redisson/tryLock", method = RequestMethod.POST)
-    public void handleByRedissonTryLcok(@RequestParam(name = "requestCount", required = false, defaultValue = "50") int requestCount,
-                                        @RequestParam(name = "skuId") Long skuId,
-                                        @RequestParam(name = "stock", required = false, defaultValue = "5") int stock,
-                                        @RequestParam(name = "purchaseQuantity", required = false, defaultValue = "1") int purchaseQuantity) throws InterruptedException, NotFoundException {
+    @PostMapping("/flashsales/mock/distributed/redisson/tryLock")
+    public void handleByRedissonTryLcok(@RequestParam(required = false, defaultValue = "50") int requestCount,
+    @RequestParam Long skuId,
+    @RequestParam(required = false, defaultValue = "5") int stock,
+    @RequestParam(required = false, defaultValue = "1") int purchaseQuantity) throws InterruptedException, NotFoundException {
 
         Date startTime = new Date();
 
@@ -230,7 +233,7 @@ public class FlashSaleMockController {
      */
     @ApiOperation(value = "Redis預減庫存量，透過RabbitMq非同步創建訂單", notes = "高併發下減輕DB壓力", httpMethod = "POST")
     @PostMapping(value = "/flashsales/mock/stockInRedisAndUseRabbitMq/{skuId}")
-    public ResponseEntity<String> StockInRedisAndUseRabbitMq(@PathVariable("skuId") Long skuId) throws NotFoundException {
+    public ResponseEntity<String> StockInRedisAndUseRabbitMq(@PathVariable Long skuId) throws NotFoundException {
         Integer stock = flashSaleService.getStockInRedis(skuId);
 
         int remainStock = (int) redisUtils.hdecr(RedisConstants.FLASHSALE_PRODUCT_STOCKS, RedisConstants.FLASHSALE_PRODUCT_PREFIX_SKU + skuId, 1);

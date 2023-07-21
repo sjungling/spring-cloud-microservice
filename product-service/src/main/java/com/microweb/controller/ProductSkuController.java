@@ -33,12 +33,12 @@ public class ProductSkuController {
     }
 
     @GetMapping("/productSkus/productId/{productId}")
-    public ResponseEntity<List<ProductSku>> getProductSkuByProductId(@PathVariable("productId") Long productId) {
+    public ResponseEntity<List<ProductSku>> getProductSkuByProductId(@PathVariable Long productId) {
         return new ResponseEntity<>(productSkuService.findByProductId(productId), HttpStatus.OK);
     }
 
     @GetMapping(value = "/productSkus/{skuId}")
-    public ResponseEntity<ProductSku> getProductSkuBySkuId(@PathVariable("skuId") Long skuId) throws NotFoundException {
+    public ResponseEntity<ProductSku> getProductSkuBySkuId(@PathVariable Long skuId) throws NotFoundException {
         return new ResponseEntity<>(productSkuService.findBySkuId(skuId), HttpStatus.OK);
     }
 

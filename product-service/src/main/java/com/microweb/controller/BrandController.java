@@ -28,7 +28,7 @@ public class BrandController {
     }
 
     @GetMapping(value = "/brands/{brandId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Brand> getBrandById(@ApiParam(value = "brandId") @PathVariable(value = "brandId") long brandId) throws NotFoundException {
+    public ResponseEntity<Brand> getBrandById(@ApiParam(value = "brandId") @PathVariable long brandId) throws NotFoundException {
         return new ResponseEntity<>(brandService.findById(brandId), HttpStatus.OK);
     }
 

@@ -23,13 +23,13 @@ public class OrderController {
 
     @ApiOperation(value = "根據訂單編號查詢訂單", notes = "", httpMethod = "GET")
     @GetMapping(value = "/orders/{orderId}")
-    public ResponseEntity<Order> getOrderById(@PathVariable("orderId") Long orderId) throws NotFoundException {
+    public ResponseEntity<Order> getOrderById(@PathVariable Long orderId) throws NotFoundException {
         return new ResponseEntity<>(orderService.findById(orderId), HttpStatus.OK);
     }
 
     @ApiOperation(value = "建立一般訂單", notes = "測試", httpMethod = "POST")
     @PostMapping(value = "/orders")
-    public ResponseEntity createOrder(@RequestParam(name = "skuId") Long skuId, @RequestParam(name = "quantity") Integer quantity) throws NotFoundException {
+    public ResponseEntity createOrder(@RequestParam Long skuId, @RequestParam Integer quantity) throws NotFoundException {
         boolean isSuccess = orderService.createOrder(skuId, quantity);
         if (isSuccess) {
             return ResponseEntity.status(HttpStatus.CREATED).build();
@@ -51,7 +51,7 @@ public class OrderController {
 
     @ApiOperation(value = "未付款訂單超時關閉", httpMethod = "PUT")
     @PutMapping(path = "/orders/{orderId}/close")
-    public ResponseEntity orderClose(@PathVariable("orderId") Long orderId) throws NotFoundException {
+    public ResponseEntity orderClose(@PathVariable Long orderId) throws NotFoundException {
 
         orderService.updateStatus(orderId, OrderStatusEnum.CLOSED);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

@@ -14,8 +14,8 @@ import java.util.List;
 @FeignClient(name = ServiceNameConstants.PRODUCT_SERVICE/*, fallback = BrandFeignApiFallback.class*/)
 public interface BrandFeignApi {
     @GetMapping("/brands")
-    List<Brand> getBrandByIdList(@RequestParam("brandIds") List<Long> brandIds);
+    List<Brand> getBrandByIdList(@RequestParam List<Long> brandIds);
 
     @GetMapping("/brands/{brandId}")
-    Brand getBrandById(@PathVariable("brandId") Long brandId);
+    Brand getBrandById(@PathVariable Long brandId);
 }

@@ -22,7 +22,7 @@ public class SwaggerUiHandler implements HandlerFunction {
     @Override
     public Mono handle(ServerRequest request) {
         return ServerResponse.status(HttpStatus.OK)
-                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .contentType(MediaType.APPLICATION_JSON)
                 .body(BodyInserters.fromObject(
                         Optional.ofNullable(uiConfiguration)
                                 .orElse(UiConfigurationBuilder.builder().build())));

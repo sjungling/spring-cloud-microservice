@@ -18,10 +18,10 @@ public interface ProductSkuFeignApi {
     List<ProductSku> getAllProductSku();
 
     @GetMapping("/productSkus/productId/{productId}")
-    List<ProductSku> getProductSkuByProductId(@PathVariable("productId") Long productId);
+    List<ProductSku> getProductSkuByProductId(@PathVariable Long productId);
 
     @GetMapping("/productSkus/{skuId}")
-    ProductSku getProductSkuBySkuId(@PathVariable("skuId") Long skuId);
+    ProductSku getProductSkuBySkuId(@PathVariable Long skuId);
 
     @PostMapping(value = "/productSkus/reduceStockByList", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     void reduceStockByList(@RequestBody List<Map<String, Object>> reduceStockList);

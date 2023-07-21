@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = "2.1.3.RELEASE"
+        springBootVersion = "2.7.14"
         springCloudVersion = "Greenwich.RELEASE"
         dependencyManagement = "1.0.7.RELEASE"
     }
@@ -69,7 +69,7 @@ subprojects {
         implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
 
         /** AMQP **/
-        implementation group: 'org.springframework.boot', name: 'spring-boot-starter-amqp', version: '2.1.4.RELEASE'
+        implementation group: 'org.springframework.boot', name: 'spring-boot-starter-amqp', version: '2.7.14'
 
         /** Lombok **/
         //runtime用不到 =>不會包進最後的jar檔

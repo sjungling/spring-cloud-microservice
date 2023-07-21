@@ -69,7 +69,7 @@ public class ProductController {
     */
 
 
-    @RequestMapping(value = "/products", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/products", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity createProduct(@Valid @RequestBody ProductRequest productRequest) throws AlreadyExistsException {
         log.debug("create product: " + productRequest);
 
@@ -78,8 +78,8 @@ public class ProductController {
     }
 
 
-    @RequestMapping(value = "/products/{productId}", method = RequestMethod.PUT)
-    public ResponseEntity updateProduct(@PathVariable("productId") Long productId, @Valid @RequestBody ProductRequest productRequest) throws NotFoundException {
+    @PutMapping("/products/{productId}")
+    public ResponseEntity updateProduct(@PathVariable Long productId, @Valid @RequestBody ProductRequest productRequest) throws NotFoundException {
 
         //log.info("update product: " + productRequest);
         productService.update(productRequest, productId);
@@ -88,7 +88,7 @@ public class ProductController {
     }
 
 
-    @RequestMapping(value = "/products/test", method = RequestMethod.POST/*, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE*/)
+    @PostMapping("/products/test")
     public ResponseEntity testProduct() throws AlreadyExistsException {
         Product product = new Product();
 
